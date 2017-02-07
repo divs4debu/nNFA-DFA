@@ -1,0 +1,4 @@
+CC=g++
+
+hellomake: hellomake.o hellofunc.o 
+	g++ Nfaparser.cpp main.cpp
