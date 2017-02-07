@@ -5,6 +5,7 @@
 #include <sstream>
 #include <set>
 #include <vector>
+#include "utils.cpp"
 
 const char var_list[6] = {'Q','E','e','D','I','F'};
 
@@ -17,18 +18,7 @@ bool is_var(char var){
     }
     return false;
 }
-bool is_empty(string line){
-    if (line.size() == 0) return true;
-    return false;
-}
-vector<string> split(const string& line, char delim){
-    vector<string> split;
-    istringstream stream(line);
-    string str;
-    while(getline(stream,str,delim))
-        split.push_back(str);
-    return split;
-}
+
 
 set<string> extract(string line){
     set<string> vars;
@@ -41,16 +31,7 @@ set<string> extract(string line){
     return vars;
 }
 
-string trim(const string& str,const string& whitespace = " "){
-    const auto strBegin = str.find_first_not_of(whitespace);
-    if (strBegin == string::npos)
-        return ""; // no content
 
-    const auto strEnd = str.find_last_not_of(whitespace);
-    const auto strRange = strEnd - strBegin + 1;
-
-    return str.substr(strBegin, strRange);
-}
 
 map<pair<string,string>, set<string> > make_transition(string line){
     map<pair<string,string>, set<string> > transition;
@@ -67,12 +48,6 @@ map<pair<string,string>, set<string> > make_transition(string line){
     return transition;
 }
 
-void print(set<string> s){
-    for(set<string>::iterator it = s.begin(); it != s.end();++it){
-        cout <<*it<<" ";
-    }
-    cout<<endl;
-}
 
 
 
