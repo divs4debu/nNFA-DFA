@@ -52,6 +52,9 @@ map<pair<string,string>, set<string> > Nfa:: get_transition(){
     return transition;
 }
 
+set<string> Nfa :: get_alphabets(){
+    return alphabets;
+}
 void Nfa:: set_transition(map<pair<string,string>, set<string> > m){
     transition.insert(m.begin(), m.end());
 }
