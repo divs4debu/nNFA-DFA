@@ -34,7 +34,7 @@ map<pair<string, string>, set<string> > NfaParser:: make_transition(string line)
 
     string sub = line.substr(start + 1, end - start - 1);
     vector<string> tuple  = split(sub, ',');
-    pair<string, string> key(tuple[0], trim(tuple[1]));
+    pair<string, string> key(trim(tuple[0]), trim(tuple[1]));
 
     transition.insert(make_pair(key, extract(line)));
     return transition;
@@ -49,8 +49,8 @@ Nfa NfaParser :: parse() {
             set_variables(line);
         }
     }
-    print(nfa.get_transition());
-    print(nfa.get_final_state());
+    //print(nfa.get_transition());
+    //print(nfa.get_final_state());
     return nfa;
     
 }

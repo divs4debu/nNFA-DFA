@@ -19,6 +19,7 @@ public:
     set<string> get_transition_states(pair<string, string> transition);
 
     set<string> eclose(string state);
+    set<string> eclose(set<string> s);
     
     //SETTERS
     void set_transition(map<pair<string,string>, set<string> > m);
