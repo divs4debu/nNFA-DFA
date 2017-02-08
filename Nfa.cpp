@@ -52,6 +52,9 @@ map<pair<string,string>, set<string> > Nfa:: get_transition(){
     return transition;
 }
 
+set<string> Nfa :: get_alphabets(){
+    return alphabets;
+}
 void Nfa:: set_transition(map<pair<string,string>, set<string> > m){
     transition.insert(m.begin(), m.end());
 }
@@ -76,5 +79,22 @@ set<string> Nfa:: eclose(set<string> s){
        ecl.insert(temp.begin(),temp.end());
     }
     return ecl;
+}
+
+vector<set<string> > Nfa :: get_part_transition(set<string> s){
+    vector<set<string> > part;
+    set<string> :: iterator it,is;
+    set<string> alpha = alphabets;
+    for(it = alpha.begin();it!= alpha.end(); ++it){
+        set<string> u ;
+        for(is = s.begin();is!= s.end();++is){
+            set<string> temp = get_transition_states(make_pair(*is,*it));
+            u.insert(temp.begin(),temp.end());
+        }
+        part.push_back(u);
+        u.clear();
+    }
+    part.push_back(eclose(s));
+    return part;
 }
 #endif

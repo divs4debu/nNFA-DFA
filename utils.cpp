@@ -33,11 +33,13 @@ bool is_empty(string line){
     return false;
 }
 
-void print(set<string> s){
+void print(set<string> s, const char& c = '\n'){
+    cout <<"{";
     for(set<string>::iterator it = s.begin(); it != s.end();++it){
-        cout <<*it<<" ";
+           cout <<*it<<",";
     }
-    cout<<endl;
+    cout <<"}\t";
+    cout<<c;
 }
 
 void print(map<pair<string,string>, set<string> > m){
@@ -47,6 +49,11 @@ void print(map<pair<string,string>, set<string> > m){
     }
 }
 
-
+set<string> uni (set<string>& s, set<string>& k){
+    set<string> u;
+    u.insert(s.begin(),s.end());
+    u.insert(k.begin(),k.end());
+    return u;
+}
 
 #endif

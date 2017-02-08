@@ -20,6 +20,7 @@ public:
 
     set<string> eclose(string state);
     set<string> eclose(set<string> s);
+    vector<set<string> > get_part_transition(set<string> s);
     
     //SETTERS
     void set_transition(map<pair<string,string>, set<string> > m);
