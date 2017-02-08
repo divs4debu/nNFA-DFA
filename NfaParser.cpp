@@ -20,7 +20,7 @@ set<string> NfaParser:: extract(string line) {
     size_t end = line.find_last_of('}');
     if (start == string::npos || end == string::npos) return vars;  // throw exception later
     string sub = line.substr(start + 1, end - start - 1);
-    vector<string> spli = split(sub, ',');
+    vector<string> spli = split(trim(sub), ',');
     vars.insert(spli.begin(), spli.end());
     return vars;
 }
@@ -34,7 +34,7 @@ map<pair<string, string>, set<string> > NfaParser:: make_transition(string line)
 
     string sub = line.substr(start + 1, end - start - 1);
     vector<string> tuple  = split(sub, ',');
-    pair<string, string> key(tuple[0], trim(tuple[1]));
+    pair<string, string> key(trim(tuple[0]), trim(tuple[1]));
 
     transition.insert(make_pair(key, extract(line)));
     return transition;
@@ -49,8 +49,8 @@ Nfa NfaParser :: parse() {
             set_variables(line);
         }
     }
-    print(nfa.get_transition());
-    print(nfa.get_final_state());
+    //print(nfa.get_transition());
+    //print(nfa.get_final_state());
     return nfa;
     
 }

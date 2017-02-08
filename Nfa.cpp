@@ -1,5 +1,5 @@
-#ifndef NFACPP
-#define NFACPP
+#ifndef NFA_CPP
+#define NFA_CPP
 
 #include <fstream>
 #include <map>
@@ -18,7 +18,6 @@ string Nfa :: get_initial_state(){
 set<string> Nfa :: eclose(set<string> visited, set<string> ecl, string state){
     if(visited.count(state))
         return ecl;
-
     ecl.insert(state);
 
     set<string> transition = get_transition_states(make_pair(trim(state), "e"));
@@ -67,5 +66,15 @@ void Nfa :: set_alphabets(set<string> s){
 }
 void Nfa :: set_states(set<string> s){
     states = s;
+}
+
+set<string> Nfa:: eclose(set<string> s){
+    set<string> ecl;
+    set<string> ::iterator it;
+    for(it=s.begin();it!=s.end();it++){
+       set<string> temp = eclose(*it);
+       ecl.insert(temp.begin(),temp.end());
+    }
+    return ecl;
 }
 #endif
