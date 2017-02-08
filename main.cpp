@@ -13,8 +13,42 @@
 #include "Nfa.cpp"
 
 
-
 using namespace std;
+
+void converter(Nfa nfa, set<string> s, set<set<string> >& visited, map<set<string>, vector<set<string> > >& m ){
+    if(m.count(s))
+        return;
+    if(visited.count(s))
+        return;
+    
+    vector<set<string> > v = nfa.get_part_transition(s);
+    m[s] = v;
+    visited.insert(s);
+    for(int i=0; i< v.size();i++){
+        converter(nfa, v[i],visited,m);
+    }
+}
+void print_vec(vector<set<string> > &v){
+    
+    for(int i=0; i< v.size(); i++){
+        print(v[i],' ');
+    }
+    
+}
+void converter(Nfa nfa){
+    set<set<string> > visited;
+    set<string> s;
+    s.insert(nfa.get_initial_state());
+    map<set<string>, vector<set<string> > > m;
+    converter(nfa,s,visited,m);
+    map<set<string>, vector<set<string> > >::iterator it;
+    for(it = m.begin();it!=m.end();it++){
+        print(it->first,' ');
+        print_vec(it->second);
+        cout<<'\n';
+        
+    }
+}
 
 int main(){
    
@@ -27,16 +61,9 @@ int main(){
     s.insert("r");
     set<string> eclose = nfa.eclose("p");
     set<string>::iterator i;
-    for (i = eclose.begin(); i != eclose.end(); i++) {
-        cout << "el :" << *i << endl;
-    }
-    
-    cout<<trim(" ");
-
-    /*set<string> eclose = parser.get_transition_states(make_pair("q", "e"));
-    set<string>::iterator i;
-    for (i = eclose.begin(); i != eclose.end(); i++) {
+    /*for (i = eclose.begin(); i != eclose.end(); i++) {
         cout << "el :" << *i << endl;
     }*/
+    converter(nfa);
     
 }
