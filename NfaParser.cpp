@@ -8,6 +8,9 @@
 #include <vector>
 #include "utils.cpp"
 
+#include "Nfa.h"
+#include "Nfa.cpp"
+
 using namespace std;
 
 
@@ -37,7 +40,7 @@ map<pair<string, string>, set<string> > NfaParser:: make_transition(string line)
     return transition;
 }
 
-void NfaParser :: parse() {
+Nfa NfaParser :: parse() {
     ifstream file(address.c_str());
     string line;
 
@@ -46,41 +49,12 @@ void NfaParser :: parse() {
             set_variables(line);
         }
     }
-    print(transition);
-    print(get_final_state());
+    print(nfa.get_transition());
+    print(nfa.get_final_state());
+    return nfa;
     
 }
 
-set<string> NfaParser::get_transition_states(pair<string, string> transition) {
-    return this->transition[transition];
-}
-
-set<string> NfaParser :: eclose(set<string> visited, set<string> ecl, string state){
-    if(visited.count(state))
-        return ecl;
-
-    ecl.insert(state);
-
-    set<string> transition = get_transition_states(make_pair(trim(state), "e"));
-    ecl.insert(transition.begin(), transition.end());
-
-    set<string>::iterator it;
-    for(it = transition.begin(); it != transition.end(); it++) {
-
-        set<string> recur = eclose(visited, ecl, *it);
-        ecl.insert(recur.begin(), recur.end());
-    }
-
-    visited.insert(state);
-
-    return ecl;
-}
-
-set<string> NfaParser :: eclose(string state) {
-    set<string> visited, ecl;
-
-    return eclose(visited, ecl, state);
-}
 
 void NfaParser :: set_variables(string line){
     char var;
@@ -89,31 +63,29 @@ void NfaParser :: set_variables(string line){
     
     switch(var){
         case 'Q':{
-            states = extract(line);
+            nfa.set_states(extract(line));
             break;
         }
         case 'D':{
             map<pair<string, string>, set<string> > temp;
             temp = make_transition(line);
-            transition.insert(temp.begin(), temp.end());
+            nfa.set_transition(temp);
             break;
         }
         case 'F':{
-            final_state = extract(line);
+            nfa.set_final_state(extract(line));
             break;
         }
         case 'I':{
             set<string> temp = extract(line);
             set<string>::iterator it = temp.begin();
-            initial_state = *it;
+            nfa.set_initial_state(*it);
             break;
+        }
+        case 'E':{
+            nfa.set_alphabets(extract(line));
         }
     }
     
 }
 
-string NfaParser :: get_initial_state(){
-    return initial_state;
-}
-
-set<string> NfaParser :: get_final_state(){ return final_state;}
