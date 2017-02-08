@@ -36,34 +36,19 @@ map<pair<string, string>, set<string> > NfaParser:: make_transition(string line)
     transition.insert(make_pair(key, extract(line)));
     return transition;
 }
+
 void NfaParser :: parse() {
     ifstream file(address.c_str());
     string line;
-    char var;
 
     while (getline(file, line)) {
-
-        istringstream stream(line);
-        stream >> var;
-        set<string> founds;
         if (!line.empty()) {
-
-            //founds = extract(line);
-            if (var == 'D') {
-                map<pair<string, string>, set<string> > temp;
-
-                temp = make_transition(line);
-
-                transition.insert(temp.begin(), temp.end());
-
-            }
+            set_variables(line);
         }
-        cout << "\n";
     }
-    for (map<pair<string, string>, set<string> >::const_iterator it = transition.begin(); it != transition.end(); ++it) {
-        cout << '(' << it->first.first << ',' << it->first.second << ')';
-        print(it->second);
-    }
+    print(transition);
+    print(get_final_state());
+    
 }
 
 set<string> NfaParser::get_transition_states(pair<string, string> transition) {
@@ -96,3 +81,39 @@ set<string> NfaParser :: eclose(string state) {
 
     return eclose(visited, ecl, state);
 }
+
+void NfaParser :: set_variables(string line){
+    char var;
+    istringstream stream(line);
+    stream >> var;
+    
+    switch(var){
+        case 'Q':{
+            states = extract(line);
+            break;
+        }
+        case 'D':{
+            map<pair<string, string>, set<string> > temp;
+            temp = make_transition(line);
+            transition.insert(temp.begin(), temp.end());
+            break;
+        }
+        case 'F':{
+            final_state = extract(line);
+            break;
+        }
+        case 'I':{
+            set<string> temp = extract(line);
+            set<string>::iterator it = temp.begin();
+            initial_state = *it;
+            break;
+        }
+    }
+    
+}
+
+string NfaParser :: get_initial_state(){
+    return initial_state;
+}
+
+set<string> NfaParser :: get_final_state(){ return final_state;}
