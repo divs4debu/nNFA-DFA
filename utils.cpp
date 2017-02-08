@@ -16,12 +16,12 @@ vector<string> split(const string& line, char delim){
 }
 
 string trim(const string& str,const string& whitespace = " "){
-    const auto strBegin = str.find_first_not_of(whitespace);
+    const int strBegin = str.find_first_not_of(whitespace);
     if (strBegin == string::npos)
         return "";
 
-    const auto strEnd = str.find_last_not_of(whitespace);
-    const auto strRange = strEnd - strBegin + 1;
+    const int strEnd = str.find_last_not_of(whitespace);
+    const int strRange = strEnd - strBegin + 1;
 
     return str.substr(strBegin, strRange);
 }

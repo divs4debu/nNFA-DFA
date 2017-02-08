@@ -13,21 +13,23 @@
 class NfaParser{
 private: 
     string address;
-    const char var_list[6] = {'Q','E','e','D','I','F'};
     map<pair<string,string>, set<string> > transition;
     
     
-    map<pair<string,string>, set<string> > get_transition();
-    bool is_var(char var);
-    set<string> extract(string line);
-    map<pair<string,string>, set<string> > make_transition(string line);
+    
     
 public:
-    NfaParser(){}
-    NfaParser(string add): address(add){}
-    
+    NfaParser() { }
+    NfaParser(string add): address(add){ }
+    set<string> eclose(string state);
     void parse();
     void set_address(string add);
+
+    map<pair<string,string>, set<string> > get_transition();
+    set<string> eclose(set<string> visited, set<string> ecl, string state);
+    set<string> extract(string line);
+    map<pair<string,string>, set<string> > make_transition(string line);
+    set<string> get_transition_states(pair<string, string> transition);
     
     
 };
