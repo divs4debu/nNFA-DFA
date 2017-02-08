@@ -20,7 +20,7 @@ set<string> NfaParser:: extract(string line) {
     size_t end = line.find_last_of('}');
     if (start == string::npos || end == string::npos) return vars;  // throw exception later
     string sub = line.substr(start + 1, end - start - 1);
-    vector<string> spli = split(sub, ',');
+    vector<string> spli = split(trim(sub), ',');
     vars.insert(spli.begin(), spli.end());
     return vars;
 }

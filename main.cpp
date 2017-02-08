@@ -30,6 +30,8 @@ int main(){
     for (i = eclose.begin(); i != eclose.end(); i++) {
         cout << "el :" << *i << endl;
     }
+    
+    cout<<trim(" ");
 
     /*set<string> eclose = parser.get_transition_states(make_pair("q", "e"));
     set<string>::iterator i;
