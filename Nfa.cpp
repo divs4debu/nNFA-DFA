@@ -80,4 +80,21 @@ set<string> Nfa:: eclose(set<string> s){
     }
     return ecl;
 }
+
+vector<set<string> > Nfa :: get_part_transition(set<string> s){
+    vector<set<string> > part;
+    set<string> :: iterator it,is;
+    set<string> alpha = alphabets;
+    for(it = alpha.begin();it!= alpha.end(); ++it){
+        set<string> u ;
+        for(is = s.begin();is!= s.end();++is){
+            set<string> temp = get_transition_states(make_pair(*is,*it));
+            u.insert(temp.begin(),temp.end());
+        }
+        part.push_back(u);
+        u.clear();
+    }
+    part.push_back(eclose(s));
+    return part;
+}
 #endif
