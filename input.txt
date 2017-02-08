@@ -1,0 +1,18 @@
+Q : { p, q, r }
+E : { a, b, c }
+
+D(p, e) : {  }
+D(p, a) : { p }
+D(p, b) : { q }
+D(p, c) : { r }
+D(q, e) : { p  }
+D(q, a) : { q }
+D(q, b) : { r }
+D(q, c) : {  }
+D(r, e) : { q }
+D(r, a) : { r }
+D(r, b) : {  }
+D(r, c) : { p }
+
+I : { p }
+F : { r } 
