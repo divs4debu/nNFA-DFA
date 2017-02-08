@@ -47,6 +47,11 @@ void print(map<pair<string,string>, set<string> > m){
     }
 }
 
-
+set<string> uni (set<string>& s, set<string>& k){
+    set<string> u;
+    u.insert(s.begin(),s.end());
+    u.insert(k.begin(),k.end());
+    return u;
+}
 
 #endif
