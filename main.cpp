@@ -9,6 +9,9 @@
 #include <vector>
 #include "utils.cpp"
 
+#include "Nfa.h"
+#include "Nfa.cpp"
+
 
 
 using namespace std;
@@ -17,9 +20,9 @@ int main(){
    
     
    NfaParser parser("input.txt");
-   parser.parse();
+   Nfa nfa = parser.parse();
 
-   set<string> eclose = parser.eclose("r");
+   set<string> eclose = nfa.eclose("r");
    set<string>::iterator i;
    for (i = eclose.begin(); i != eclose.end(); i++) {
    		cout << "el :" << *i << endl;
