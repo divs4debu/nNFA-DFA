@@ -62,16 +62,19 @@ string converter(Nfa nfa){
         set<string>::iterator is;
         int i =0;
         for(is = alpha.begin();is!= alpha.end();is++){
+            //cout<<states.size();
             cout<<*is<<"->";
-            print(states[i++]);
+            print(states[i]);
             content+="D("+get_str(current,',')+" "+*is+") : "+get_str(states[i]);
+            i++;
         }
         cout<<'\n';
 
-        for (is = current.begin();is!= current.end();is++) {
+        set<string>::iterator ij;
+        for (ij = current.begin();ij!= current.end();ij++) {
             set<string> final_states = nfa.get_final_state();
 
-            if(final_states.count(*is)) {
+            if(final_states.count(*ij)) {
                 final.push_back(current);
                 continue;
             }
