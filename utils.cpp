@@ -42,6 +42,19 @@ void print(set<string> s, const char& c = '\n'){
     cout<<c;
 }
 
+string get_str(set<string> s, const char& c = '\n'){
+    stringstream os;
+    os <<" {";
+    for(set<string>::iterator it = s.begin(); it != s.end();++it){
+           os <<*it<<",";
+    }
+    os <<"}";
+    os<<c;
+
+    return os.str();
+}
+
+
 void print(map<pair<string,string>, set<string> > m){
     for (map<pair<string, string>, set<string> >::const_iterator it = m.begin(); it != m.end(); ++it) {
         cout << '(' << it->first.first << ',' << it->first.second << ')';
@@ -54,6 +67,16 @@ set<string> uni (set<string>& s, set<string>& k){
     u.insert(s.begin(),s.end());
     u.insert(k.begin(),k.end());
     return u;
+}
+
+string get_vec_str(vector<set <string> > v){
+    stringstream ss;
+    ss << " {";
+    for(int i=0; i< v.size();++i){
+        ss << get_str(v[i],',');
+    }
+    ss <<"}";
+    return ss.str();
 }
 
 #endif

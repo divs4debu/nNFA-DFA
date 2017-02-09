@@ -27,7 +27,7 @@ public:
     set<string> extract(string line);
     map<pair<string,string>, set<string> > make_transition(string line);
     void set_variables(string line);
-    
+    bool verify();
     
 };
 #endif

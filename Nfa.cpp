@@ -55,6 +55,10 @@ map<pair<string,string>, set<string> > Nfa:: get_transition(){
 set<string> Nfa :: get_alphabets(){
     return alphabets;
 }
+
+set<string> Nfa::get_states(){
+    return states;
+}
 void Nfa:: set_transition(map<pair<string,string>, set<string> > m){
     transition.insert(m.begin(), m.end());
 }
@@ -91,10 +95,47 @@ vector<set<string> > Nfa :: get_part_transition(set<string> s){
             set<string> temp = get_transition_states(make_pair(*is,*it));
             u.insert(temp.begin(),temp.end());
         }
-        part.push_back(u);
+        part.push_back(eclose(u));
         u.clear();
     }
-    part.push_back(eclose(s));
     return part;
 }
+
+bool Nfa::verify(){
+    for (map<pair<string, string>, set<string> >::const_iterator it = transition.begin(); it != transition.end(); ++it) {
+       if( ! states.count(it->first.first) ){
+            cout<<it->first.first<<" : not a valid state"<<endl;
+            return false;
+        }
+       if(!alphabets.count(it->first.second) && it->first.second != "e") {
+            cout<<it->first.second<<" : not a valid alphabet"<<endl;
+            return false;
+       }
+       set<string> :: iterator is;
+       set<string> temp = it->second;
+       for(is = temp.begin(); is!= temp.end(); ++is){
+            if(! states.count(*is)){
+                cout<<*is<<" Transition to the invalid state"<<endl;
+                return false;
+            }
+       }
+       
+       
+    }
+
+    if(!states.count(initial_state)){
+        cout<<"I :"<<initial_state<<" is not valid state "<<endl;
+        return false;
+    }
+    set<string> ::iterator it;
+    set<string> s = get_final_state();
+    for(it = s.begin(); it!= s.end();++it ){
+        if( ! states.count(*it) ){
+            cout<<*it<<" not a valid state"<<endl;
+            return false;
+        }
+    }
+
+    return true;
+} 
 #endif

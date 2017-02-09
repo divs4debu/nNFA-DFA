@@ -13,6 +13,26 @@
 
 using namespace std;
 
+bool NfaParser:: verify(){
+    map<pair<string, string>, set<string> > trans = nfa.get_transition();
+    for (map<pair<string, string>, set<string> >::const_iterator it = trans.begin(); it != trans.end(); ++it) {
+       if( ! nfa.get_states().count(it->first.first) ){
+            cout<<it->first.first<<" : not a valid state"<<endl;
+            return false;
+        }
+        //cout<<it->first.second<<endl;
+       if(! nfa.get_alphabets().count(it->first.second)) {
+            cout<<it->first.second<<" : not a valid alphabet"<<endl;
+            return false;
+       }
+
+
+        //cout << '(' << it->first.first << ',' << it->first.second << ')';
+        //print(it->second);
+       
+    }
+    return true;
+} 
 
 set<string> NfaParser:: extract(string line) {
     set<string> vars;
@@ -49,10 +69,7 @@ Nfa NfaParser :: parse() {
             set_variables(line);
         }
     }
-    //print(nfa.get_transition());
-    //print(nfa.get_final_state());
     return nfa;
-    
 }
 
 
